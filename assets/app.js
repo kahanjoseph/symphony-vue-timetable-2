@@ -1,11 +1,15 @@
 import { createApp } from 'vue';
+import { Button } from '@/components/ui/button';
 import "./app.css";
 
 // Create a simple Vue component
 const App = {
+    components: {
+        Button
+    },
     data() {
         return {
-            message: 'Hello from Vue.js!',
+            message: 'Hello from Vue.js with shadcn/vue!',
             count: 0
         }
     },
@@ -18,7 +22,10 @@ const App = {
         <div class="vue-app">
             <h2 class="text-blue-500 text-2xl font-bold underline">{{ message }}</h2>
             <p>Count: {{ count }}</p>
-            <button @click="increment" class="bg-blue-500 text-white px-4 py-2 rounded">Increment</button>
+            <div class="flex gap-2">
+                <Button @click="increment" variant="default">Increment</Button>
+                <Button @click="count = 0" variant="outline">Reset</Button>
+            </div>
         </div>
     `
 };
