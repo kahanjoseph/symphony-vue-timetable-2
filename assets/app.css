@@ -7,33 +7,7 @@ body {
   background-color: #eeeeee;
 }
 
-/* Vue.js App Styles */
-.vue-app {
-  margin: 20px 0;
-  padding: 20px;
-  border: 2px solid #42b883;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
-
-/* .vue-app h2 {
-  color: #1b2ed4;
-  margin-bottom: 15px;
-} */
-
-.vue-app button {
-  background-color: #42b883;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.vue-app button:hover {
-  background-color: #369870;
-}
+/* Global styles - Vue component styles are now in App.vue */
 
 @theme inline {
   --color-background: var(--background);
