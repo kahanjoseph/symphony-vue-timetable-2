@@ -13,6 +13,12 @@ use App\Repository\TimeEntryRepository;
 
 final class TimeClockController extends AbstractController
 {
+    #[Route('/', name: 'app_home')]
+    public function home(): Response
+    {
+        return $this->redirectToRoute('app_time_entry');
+    }
+
     #[Route('/time/clock', name: 'app_time_entry')]
     public function index(): Response
     {
