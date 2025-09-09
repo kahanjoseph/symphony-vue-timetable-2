@@ -44,17 +44,4 @@ RUN ./build.sh
 # Expose port
 EXPOSE 8000
 
-ENV PORT=8000
-
-# Create the start script with robust handling for $PORT
-RUN echo '#!/bin/bash' > /app/start.sh && \
-    echo 'PORT=${PORT:-8000}' >> /app/start.sh && \
-    echo 'if ! [[ "$PORT" =~ ^[0-9]+$ ]]; then' >> /app/start.sh && \
-    echo '  echo "Error: PORT is not a valid number. Exiting."' >> /app/start.sh && \
-    echo '  exit 1' >> /app/start.sh && \
-    echo 'fi' >> /app/start.sh && \
-    echo 'php -S 0.0.0.0:$PORT -t public' >> /app/start.sh && \
-    chmod +x /app/start.sh
-
-# Start the application
-CMD ["/app/start.sh"]
+CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
