@@ -44,6 +44,8 @@ RUN ./build.sh
 # Expose port
 EXPOSE 8000
 
+ENV PORT=8000
+
 # Create the start script with robust handling for $PORT
 RUN echo '#!/bin/bash' > /app/start.sh && \
     echo 'PORT=${PORT:-8000}' >> /app/start.sh && \
