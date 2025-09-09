@@ -2,23 +2,15 @@
 import { ref, onMounted } from 'vue'
 import { Button } from '@/components/ui/button'
 import TimeTable from '@/components/TimeTable.vue'
+import { useQuery } from '@tanstack/vue-query'
 
-const canClockIn = ref(false)
-
-const fetchLastTimeEntry = async () => {
-  try {
+const lastTimeEntry = useQuery({
+  queryKey: ['lastTimeEntry'],
+  queryFn: async() => {
     const response = await fetch('/api/time/entry/last')
-    if (response.ok) {
-      const result = await response.json()
-      // Show "Clock In" button only if the last entry has both clockIn and clockOut
-      canClockIn.value = result.hasClockOut
-    } else {
-      console.error('Failed to fetch last time entry:', response.statusText)
-    }
-  } catch (error) {
-    console.error('Error fetching last time entry:', error)
-  }
-}
+    return await response.json()
+  },
+})
 
 const clockIn = async () => {
   try {
@@ -31,7 +23,7 @@ const clockIn = async () => {
     const result = await response.json()
     if (result.success) {
       alert('Clocked In!')
-      await fetchLastTimeEntry() // Refresh the button state
+      lastTimeEntry.refetch()
     } else {
       alert(`Error: ${result.error}`)
     }
@@ -51,7 +43,7 @@ const clockOut = async () => {
     const result = await response.json()
     if (result.success) {
       alert('Clocked Out!')
-      await fetchLastTimeEntry() // Refresh the button state
+      lastTimeEntry.refetch()
     } else {
       alert(`Error: ${result.error}`)
     }
@@ -73,9 +65,6 @@ const logout = async () => {
   }
 }
 
-onMounted(() => {
-  fetchLastTimeEntry() // Fetch the current state on component load
-})
 </script>
 
 <template>
@@ -85,11 +74,10 @@ onMounted(() => {
         <h1 class="text-2xl font-bold text-gray-900">Time Clock</h1>
         <p class="text-gray-600">Track your work hours</p>
       </div>
-      
       <div class="space-y-4">
         <div class="flex gap-4">
           <Button 
-            v-if="canClockIn" 
+            v-if="lastTimeEntry.data?.value?.hasClockOut" 
             @click="clockIn" 
             variant="default"
             class=""
@@ -97,7 +85,7 @@ onMounted(() => {
             Clock In
           </Button>
           <Button 
-            v-if="!canClockIn" 
+            v-if="!lastTimeEntry.data?.value?.hasClockOut" 
             @click="clockOut" 
             class=""
           >

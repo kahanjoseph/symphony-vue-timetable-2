@@ -113,7 +113,8 @@ final class TimeClockController extends AbstractController
 
         return $this->json([
             'hasClockIn' => $lastTimeEntry->getClockIn() !== null,
-            'hasClockOut' => $lastTimeEntry->getClockOut() !== null
+            'hasClockOut' => $lastTimeEntry->getClockOut() !== null,
+            'clockOut' => $lastTimeEntry->getClockOut()
         ]);
     }
 }
