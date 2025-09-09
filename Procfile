@@ -1,0 +1,1 @@
+web: symfony serve --port=8000 --no-tls
