@@ -3,10 +3,10 @@
 echo "Creating .env file for build..."
 echo "APP_ENV=dev" > .env
 echo "APP_SECRET=placeholder-secret-key" >> .env
-echo "DATABASE_URL=\"sqlite:///%kernel.project_dir%/var/data.db\"" >> .env
+echo "DATABASE_URL=\"${DATABASE_URL}\"" >> .env
 
 echo "Installing PHP dependencies..."
-composer install --no-dev --optimize-autoloader
+composer install --optimize-autoloader
 
 echo "Installing Node.js dependencies..."
 npm ci

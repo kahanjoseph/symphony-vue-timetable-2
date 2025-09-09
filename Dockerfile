@@ -10,10 +10,17 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     nodejs \
-    npm
+    npm \
+    libpq-dev
+
+
+
+# Force IPv4 preference for getaddrinfo (no sed tricks)
+RUN printf '\n# Prefer IPv4 for getaddrinfo()\nprecedence ::ffff:0:0/96  100\n' >> /etc/gai.conf
+
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -28,8 +35,8 @@ WORKDIR /app
 # Copy application files
 COPY . .
 
-# Make build script executable
-RUN chmod +x build.sh
+# Make build script executable and fix line endings
+RUN sed -i 's/\r$//' build.sh && chmod +x build.sh
 
 # Run our build script
 RUN ./build.sh

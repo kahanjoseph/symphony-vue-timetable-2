@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { Button } from '@/components/ui/button'
+import TimeTable from '@/components/TimeTable.vue'
 
 const canClockIn = ref(false)
 
@@ -113,6 +114,7 @@ onMounted(() => {
       </div>
     </div>
 
+    <TimeTable />
     <div class="mt-8 text-center">
     </div>
   </div>
